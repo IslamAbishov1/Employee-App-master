@@ -60,11 +60,8 @@ public class EmployeeController {
         return employee;
     }
     @PostMapping("/employees")
-    public String addEmployee(Employee employee){//or @ModelAttribute("employee") Employee employee
-        //in case of passing an id via json we gonna set it to 0 to do insert instead of an update
-        //employee.setId(0);
+    public String addEmployee(Employee employee){
         employeeService.save(employee);
-          // it has updated id from DB in case of insert
         value=-1;
         return "redirect:/employees/list";
     }

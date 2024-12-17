@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class PointCutExpression {
 
-    //declare Poincuts that match packages
     @Pointcut("execution(* com.mrurespect.employeeapp.controller.*.*(..))")
     public void controllerPackage(){}
     @Pointcut("execution(* com.mrurespect.employeeapp.dao.*.*(..))")

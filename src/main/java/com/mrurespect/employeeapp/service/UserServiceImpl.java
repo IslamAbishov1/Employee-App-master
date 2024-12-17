@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByUserName(String userName) {
-		// check the database if the user already exists
 		return userDao.findByUserName(userName);
 	}
 
@@ -44,7 +43,6 @@ public class UserServiceImpl implements UserService {
 	public void save(WebUser webUser) {
 		User user = new User();
 
-		// assign user details to the user object
 		user.setUserName(webUser.getUsername());
 		user.setPassword(passwordEncoder.encode(webUser.getPassword()));
 		user.setFirstName(webUser.getFirstName());
@@ -52,10 +50,8 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(webUser.getEmail());
 		user.setEnabled(true);
 
-		// give user default role of "employee"
 		user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_EMPLOYEE")));
 
-		// save user in the database
 		userDao.save(user);
 	}
 	@Override

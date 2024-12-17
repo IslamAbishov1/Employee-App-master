@@ -13,11 +13,8 @@ public class LoggingAspect extends PointCutExpression {
 
     @Before("appFlow()")
     public void beforeAdvice(JoinPoint joinPoint){
-
-        //display method we are calling
         String method =joinPoint.getSignature().toShortString();
         logger.info(() -> "====>> in @BeforeAdvice: calling method " + method);
-        // display the arguments
         Object[] objects =joinPoint.getArgs();
         for (Object arg:objects) {
             logger.info(() -> "====>> argument: " + arg);
@@ -29,11 +26,8 @@ public class LoggingAspect extends PointCutExpression {
             returning = "result"
     )
     public void afterReturningAdvice(JoinPoint joinPoint,Object result){
-        //display method we are calling
         String method =joinPoint.getSignature().toShortString();
         logger.info(() -> "====>> in @AfterReturning: calling method " + method);
-
-        //display data returned
         logger.info(() -> "====>> result: " + result);
     }
     @AfterThrowing(
@@ -44,6 +38,4 @@ public class LoggingAspect extends PointCutExpression {
         String method = joinPoint.getSignature().toShortString();
         logger.severe("====>> Exception in " + method + ": " + exception.getMessage());
     }
-
-
 }
