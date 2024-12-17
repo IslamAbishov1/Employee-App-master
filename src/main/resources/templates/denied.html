@@ -3,10 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <title>Access Denied</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0066cc, #003366);
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        a {
+            color: #28a745;
+            font-size: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: white;
+            background-color: #28a745;
+            transform: scale(1.1);
+        }
+
+        #snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: white;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(110vh); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .button:active {
+            background-color: #004085;
+            transform: scale(0.9);
+        }
+    </style>
 </head>
 <body>
-<h2>you are not authorized to access this ressource</h2>
-<hr>
-<a th:href="@{/}"> return to home page</a>
+<div class="container">
+    <h2>You are not authorized to access this resource</h2>
+    <hr>
+    <div class="buttons">
+        <a th:href="@{/}" class="button">Return to home page</a>
+        <a th:href="@{/login}" class="button">Go to Login</a>
+    </div>
+    <div id="snowflakes"></div>
+</div>
+
+<script>
+    function createSnowflake() {
+        const snowflake = document.createElement("div");
+        snowflake.className = "snowflake";
+        snowflake.textContent = ".";
+        snowflake.style.left = Math.random() * 100 + "vw";
+        snowflake.style.animationDuration = Math.random() * 5 + 3 + "s";
+        snowflake.style.fontSize = Math.random() * 15 + 10 + "px";
+        document.getElementById("snowflakes").appendChild(snowflake);
+        setTimeout(() => snowflake.remove(), 8000);
+    }
+    setInterval(createSnowflake, 200);
+</script>
 </body>
 </html>

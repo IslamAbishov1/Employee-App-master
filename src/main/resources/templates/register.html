@@ -1,59 +1,94 @@
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Regsiter</title>
+  <title>Register</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #0066cc, #003366);
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h3 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      text-shadow: 1px 1px 3px black;
+    }
+    .form-check {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .input-group-text {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #28a745;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    a {
+      color: #28a745;
+      font-size: 18px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #218838;
+    }
+    .error-message {
+      color: #dc3545;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body class="vh-100 d-flex justify-content-center align-items-center">
-<div class="h-75 w-75 bg-light rounded rounded-1 d-flex justify-content-center align-items-center">
-  <form action="#" th:action="@{/register/processRegistrationForm}" class="w-50" method="POST" th:object="${webUser}">
-    <h3 class="text-center mb-4">Login</h3>
-    <table class="">
-      <tr>
-        <td class="p-3">Enter a username*:</td>
-        <td><input class="input-group-text w-100" th:field="*{username}" type="text" ></td>
-      </tr>
-      <tr>
-        <td class="p-3">Enter your firstName*:</td>
-        <td><input class="input-group-text w-100" th:field="*{firstName}" type="text" ></td>
-      </tr>
-        <tr>
-        <td class="p-3">Enter your lastName*:</td>
-        <td><input class="input-group-text w-100" th:field="*{lastName}" type="text" ></td>
-      </tr>
-        <tr>
-        <td class="p-3">Enter your email*:</td>
-        <td><input class="input-group-text w-100" th:field="*{email}" type="email" ></td>
-      </tr>
-        <tr>
-        <td class="p-3">Enter a password*:</td>
-        <td><input class="input-group-text w-100" th:field="*{password}" type="password" ></td>
-      </tr>
-    </table>
-    <br/>
-    <div class="d-flex justify-content-between">
-      <input type="submit" value="Register" class="btn btn-outline-secondary">
-      <i th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></i>
-      <i th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></i>
-      <i th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></i>
-      <i th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></i>
-      <i th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></i>
-      <i th:if="${registrationError}" th:text="${registrationError}" class="text-danger"></i>
-    </div>
-    <br>
-    <a th:href="@{/}">return to login page</a>
+<body>
+<div class="container">
+  <h3>Register</h3>
+  <div th:if="${param.logout}" class="error-message">
+    <i>You have been logged out</i>
+  </div>
+  <form action="#" th:action="@{/register/processRegistrationForm}" class="form-check" method="POST" th:object="${webUser}">
+    <input class="input-group-text" th:field="*{username}" type="text" placeholder="Enter a username*" required>
+    <input class="input-group-text" th:field="*{firstName}" type="text" placeholder="Enter your firstName*" required>
+    <input class="input-group-text" th:field="*{lastName}" type="text" placeholder="Enter your lastName*" required>
+    <input class="input-group-text" th:field="*{email}" type="email" placeholder="Enter your email*" required>
+    <input class="input-group-text" th:field="*{password}" type="password" placeholder="Enter a password*" required>
+    <button type="submit">Register</button>
+    <div th:if="${#fields.hasErrors('username')}" class="error-message" th:errors="*{username}"></div>
+    <div th:if="${#fields.hasErrors('password')}" class="error-message" th:errors="*{password}"></div>
+    <div th:if="${#fields.hasErrors('firstName')}" class="error-message" th:errors="*{firstName}"></div>
+    <div th:if="${#fields.hasErrors('lastName')}" class="error-message" th:errors="*{lastName}"></div>
+    <div th:if="${#fields.hasErrors('email')}" class="error-message" th:errors="*{email}"></div>
+    <div th:if="${registrationError}" class="error-message" th:text="${registrationError}"></div>
   </form>
+  <a th:href="@{/}" class="text-decoration-none mt-3">Return to login page</a>
 </div>
-</body>
-</html>
-
 </body>
 </html>
